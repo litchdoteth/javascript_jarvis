@@ -57,7 +57,7 @@ function takeCommand(message){
         speak("Hello Sir, How May I Help You?");
     }
 
-    else if(message.includes('who are you') || message.includes('jarvis') || message.includes('hello')){
+    else if(message.includes('who are you') || message.includes('jarvis')){
         speak("Hello Sir, I am Jarvis the Real A.I. of Solana.");
     }
     else if(message.includes("open google")){
