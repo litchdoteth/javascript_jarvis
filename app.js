@@ -78,6 +78,21 @@ function takeCommand(message){
         speak("Opening Pump Fun...")
     }
 
+    else if(message.includes("ca")|| message.includes('contract address')){
+        window.open("https://pump.fun/", "_blank");
+        speak("Opening Pump Fun...")
+    }
+
+    else if(message.includes("tg")|| message.includes('telegram')){
+        window.open("https://t.me/", "_blank");
+        speak("Opening Telegram...")
+    }
+
+    else if(message.includes("x")|| message.includes('twitter')){
+        window.open("https://x.com/jarvistherealai", "_blank");
+        speak("Opening X...")
+    }
+
     else if(message.includes('what is') || message.includes('who is') || message.includes('what are')) {
         window.open(`https://www.google.com/search?q=${message.replace(" ", "+")}`, "_blank");
         const finalText = "This is what i found on internet regarding " + message;
