@@ -1,107 +1,148 @@
-const btn = document.querySelector('.talk');
-const content = document.querySelector('.content');
+const btn = document.querySelector('.talk')
+const content = document.querySelector('.content')
 
-let voices = [];
-
-// Load available voices and set a specific one
-function loadVoices() {
-    voices = window.speechSynthesis.getVoices();
-    // Optionally, select a specific voice (e.g., "Google UK English Male")
-    const selectedVoice = voices.find(voice => voice.name === "Google UK English Male") || voices[0];
-    return selectedVoice;
-}
 
 function speak(text) {
     const text_speak = new SpeechSynthesisUtterance(text);
-    text_speak.voice = loadVoices(); // Assign the selected voice
-    text_speak.rate = 1; // Normal speed
-    text_speak.volume = 1; // Full volume
-    text_speak.pitch = 1; // Default pitch
+
+    text_speak.rate = 1;
+    text_speak.volume = 1;
+    text_speak.pitch = 1;
+
+    // Get available voices
+    const voices = window.speechSynthesis.getVoices();
+
+    // Select a specific male voice (or a fallback if not found)
+    const maleVoice = 
+        voices.find(voice => voice.name.includes("Male")) ||  // Look for "Male"
+        voices.find(voice => voice.name.includes("Google UK English Male")) ||  // Specific fallback
+        voices.find(voice => voice.lang === "en-GB");  // General fallback
+
+    if (maleVoice) {
+        text_speak.voice = maleVoice;
+        console.log(`Using voice: ${maleVoice.name}`);
+    } else {
+        console.warn("Male voice not found. Using default voice.");
+    }
 
     window.speechSynthesis.speak(text_speak);
 }
 
-// Ensure voices are loaded correctly (some browsers need this)
-window.speechSynthesis.onvoiceschanged = loadVoices;
+function wishMe(){
+    var day = new Date();
+    var hour = day.getHours();
 
-function wishMe() {
-    const day = new Date();
-    const hour = day.getHours();
-
-    if (hour >= 0 && hour < 12) {
-        speak("Good Morning Boss...");
-    } else if (hour >= 12 && hour < 17) {
-        speak("Good Afternoon Master...");
-    } else {
-        speak("Good Evening Sir...");
+    if(hour>=0 && hour<12){
+        speak("Good Morning Boss...")
     }
+
+    else if(hour>12 && hour<17){
+        speak("Good Afternoon Master...")
+    }
+
+    else{
+        speak("Good Evenining Sir...")
+    }
+
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('load', ()=>{
     speak("Initializing JARVIS..");
     wishMe();
 });
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
 
-recognition.onresult = (event) => {
+const recognition =  new SpeechRecognition();
+
+recognition.onresult = (event)=>{
     const currentIndex = event.resultIndex;
     const transcript = event.results[currentIndex][0].transcript;
     content.textContent = transcript;
     takeCommand(transcript.toLowerCase());
-};
 
-btn.addEventListener('click', () => {
-    content.textContent = "Listening....";
+}
+
+btn.addEventListener('click', ()=>{
+    content.textContent = "Listening...."
     recognition.start();
-});
+})
 
-function takeCommand(message) {
-    if (message.includes('hey') || message.includes('hello')) {
+function takeCommand(message){
+    if(message.includes('hey') || message.includes('hello')){
         speak("Hello Sir, How May I Help You?");
-    } else if (message.includes('who are you') || message.includes('jarvis')) {
+    }
+
+    else if(message.includes('who are you') || message.includes('jarvis') || message.includes('hello')){
         speak("Hello Sir, I am Jarvis the Real AI of Solana.");
-    } else if (message.includes("open google")) {
+    }
+    else if(message.includes("open google")){
         window.open("https://google.com", "_blank");
-        speak("Opening Google...");
-    } else if (message.includes("open youtube")) {
+        speak("Opening Google...")
+    }
+    else if(message.includes("open youtube")){
         window.open("https://youtube.com", "_blank");
-        speak("Opening YouTube...");
-    } else if (message.includes("open facebook")) {
+        speak("Opening Youtube...")
+    }
+    else if(message.includes("open facebook")){
         window.open("https://facebook.com", "_blank");
-        speak("Opening Facebook...");
-    } else if (message.includes("pump") || message.includes('fun')) {
+        speak("Opening Facebook...")
+    }
+
+    else if(message.includes("pump")|| message.includes('fun')){
         window.open("https://pump.fun", "_blank");
-        speak("Opening Pump Fun...");
-    } else if (message.includes("ca") || message.includes('contract address')) {
+        speak("Opening Pump Fun...")
+    }
+
+    else if(message.includes("ca")|| message.includes('contract address')){
         window.open("https://pump.fun/", "_blank");
-        speak("Opening Pump Fun...");
-    } else if (message.includes("tg") || message.includes('telegram')) {
+        speak("Opening Pump Fun...")
+    }
+
+    else if(message.includes("tg")|| message.includes('telegram')){
         window.open("https://t.me/", "_blank");
-        speak("Opening Telegram...");
-    } else if (message.includes("x") || message.includes('twitter')) {
+        speak("Opening Telegram...")
+    }
+
+    else if(message.includes("x")|| message.includes('twitter')){
         window.open("https://x.com/jarvistherealai", "_blank");
-        speak("Opening X...");
-    } else if (message.includes('what is') || message.includes('who is') || message.includes('what are')) {
+        speak("Opening X...")
+    }
+
+    else if(message.includes('what is') || message.includes('who is') || message.includes('what are')) {
         window.open(`https://www.google.com/search?q=${message.replace(" ", "+")}`, "_blank");
-        const finalText = "This is what I found on the internet regarding " + message;
-        speak(finalText);
-    } else if (message.includes('wikipedia')) {
+        const finalText = "This is what i found on internet regarding " + message;
+	    speak(finalText);
+  
+    }
+
+    else if(message.includes('wikipedia')) {
         window.open(`https://en.wikipedia.org/wiki/${message.replace("wikipedia", "")}`, "_blank");
-        const finalText = "This is what I found on Wikipedia regarding " + message;
+        const finalText = "This is what i found on wikipedia regarding " + message;
         speak(finalText);
-    } else if (message.includes('time')) {
-        const time = new Date().toLocaleString(undefined, { hour: "numeric", minute: "numeric" });
-        speak(time);
-    } else if (message.includes('date')) {
-        const date = new Date().toLocaleString(undefined, { month: "short", day: "numeric" });
-        speak(date);
-    } else if (message.includes('calculator')) {
-        window.open('Calculator:///');
-        speak("Opening Calculator...");
-    } else {
+    }
+
+    else if(message.includes('time')) {
+        const time = new Date().toLocaleString(undefined, {hour: "numeric", minute: "numeric"})
+        const finalText = time;
+        speak(finalText);
+    }
+
+    else if(message.includes('date')) {
+        const date = new Date().toLocaleString(undefined, {month: "short", day: "numeric"})
+        const finalText = date;
+        speak(finalText);
+    }
+
+    else if(message.includes('calculator')) {
+        window.open('Calculator:///')
+        const finalText = "Opening Calculator";
+        speak(finalText);
+    }
+
+    else {
         window.open(`https://www.google.com/search?q=${message.replace(" ", "+")}`, "_blank");
-        speak("I found some information for " + message + " on Google.");
+        const finalText = "I found some information for " + message + " on google";
+        speak(finalText);
     }
 }
