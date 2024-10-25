@@ -3,20 +3,20 @@ const content = document.querySelector('.content');
 
 let voices = [];
 
-// Load available voices and set a Jarvis-like voice
+// Load available voices and set a specific one
 function loadVoices() {
     voices = window.speechSynthesis.getVoices();
-    // Try selecting a Jarvis-like voice (e.g., Google UK English Male or a deep voice)
-    const jarvisVoice = voices.find(voice => voice.name.includes("UK English Male") || voice.name.includes("Microsoft David")) || voices[0];
-    return jarvisVoice;
+    // Optionally, select a specific voice (e.g., "Google UK English Male")
+    const selectedVoice = voices.find(voice => voice.name === "Google UK English Male") || voices[0];
+    return selectedVoice;
 }
 
 function speak(text) {
     const text_speak = new SpeechSynthesisUtterance(text);
-    text_speak.voice = loadVoices(); // Assign the selected Jarvis-like voice
-    text_speak.rate = 0.9; // Slightly slower for a more refined sound
+    text_speak.voice = loadVoices(); // Assign the selected voice
+    text_speak.rate = 1; // Normal speed
     text_speak.volume = 1; // Full volume
-    text_speak.pitch = 0.9; // Slightly lower pitch for a deep tone
+    text_speak.pitch = 1; // Default pitch
 
     window.speechSynthesis.speak(text_speak);
 }
@@ -61,7 +61,7 @@ function takeCommand(message) {
     if (message.includes('hey') || message.includes('hello')) {
         speak("Hello Sir, How May I Help You?");
     } else if (message.includes('who are you') || message.includes('jarvis')) {
-        speak("Hello Sir, I am Jarvis, the Real AI of Solana.");
+        speak("Hello Sir, I am Jarvis the Real AI of Solana.");
     } else if (message.includes("open google")) {
         window.open("https://google.com", "_blank");
         speak("Opening Google...");
