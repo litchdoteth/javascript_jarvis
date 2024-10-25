@@ -2,28 +2,12 @@ const btn = document.querySelector('.talk')
 const content = document.querySelector('.content')
 
 
-function speak(text) {
+function speak(text){
     const text_speak = new SpeechSynthesisUtterance(text);
 
     text_speak.rate = 1;
     text_speak.volume = 1;
     text_speak.pitch = 1;
-
-    // Get available voices
-    const voices = window.speechSynthesis.getVoices();
-
-    // Select a specific male voice (or a fallback if not found)
-    const maleVoice = 
-        voices.find(voice => voice.name.includes("Male")) ||  // Look for "Male"
-        voices.find(voice => voice.name.includes("Google UK English Male")) ||  // Specific fallback
-        voices.find(voice => voice.lang === "en-GB");  // General fallback
-
-    if (maleVoice) {
-        text_speak.voice = maleVoice;
-        console.log(`Using voice: ${maleVoice.name}`);
-    } else {
-        console.warn("Male voice not found. Using default voice.");
-    }
 
     window.speechSynthesis.speak(text_speak);
 }
