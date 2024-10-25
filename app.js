@@ -80,7 +80,7 @@ function takeCommand(message){
 
     else if(message.includes("ca")|| message.includes('contract address')){
         window.open("https://pump.fun/", "_blank");
-        speak("Opening Pump Dot Fun...")
+        speak("Opening Official Jarvis Contract Address...")
     }
 
     else if(message.includes("tg")|| message.includes('telegram')){
