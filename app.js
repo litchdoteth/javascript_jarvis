@@ -58,7 +58,7 @@ function takeCommand(message){
     }
 
     else if(message.includes('who are you') || message.includes('jarvis') || message.includes('hello')){
-        speak("Hello Sir, I am Jarvis the Real AI of Solana.");
+        speak("Hello Sir, I am Jarvis the Real A.I. of Solana.");
     }
     else if(message.includes("open google")){
         window.open("https://google.com", "_blank");
