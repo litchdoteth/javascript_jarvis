@@ -75,12 +75,12 @@ function takeCommand(message){
 
     else if(message.includes("pump")|| message.includes('fun')){
         window.open("https://pump.fun", "_blank");
-        speak("Opening Pump Fun...")
+        speak("Opening Pump Dot Fun...")
     }
 
     else if(message.includes("ca")|| message.includes('contract address')){
         window.open("https://pump.fun/", "_blank");
-        speak("Opening Pump Fun...")
+        speak("Opening Pump Dot Fun...")
     }
 
     else if(message.includes("tg")|| message.includes('telegram')){
