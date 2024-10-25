@@ -56,6 +56,10 @@ function takeCommand(message){
     if(message.includes('hey') || message.includes('hello')){
         speak("Hello Sir, How May I Help You?");
     }
+
+    else if(message.includes('who are you') || message.includes('jarvis') || message.includes('hello')){
+        speak("Hello Sir, I am Jarvis the Real AI of Solana.");
+    }
     else if(message.includes("open google")){
         window.open("https://google.com", "_blank");
         speak("Opening Google...")
@@ -67,6 +71,11 @@ function takeCommand(message){
     else if(message.includes("open facebook")){
         window.open("https://facebook.com", "_blank");
         speak("Opening Facebook...")
+    }
+
+    else if(message.includes("pump")|| message.includes('fun')){
+        window.open("https://pump.fun", "_blank");
+        speak("Opening Pump Fun...")
     }
 
     else if(message.includes('what is') || message.includes('who is') || message.includes('what are')) {
